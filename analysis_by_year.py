@@ -55,6 +55,33 @@ df_year[genres].groupby(df_year['year']).sum().plot(figsize=(20, 8))
 plt.show()
 
 
+# pyechart版 折線圖 
+line = (Line(init_opts=opts.InitOpts(width="1000px", height="500px", theme=ThemeType.LIGHT)))
+line.add_xaxis(year)
+
+for g in genres:
+    v = data_line[g].values.tolist()
+    line.add_yaxis(g, v, is_smooth=True, is_symbol_show=False)
+    
+line.set_global_opts(title_opts=opts.TitleOpts(title='1901-2020年曲風流變', pos_top='15', pos_left='40%', title_textstyle_opts=opts.TextStyleOpts(font_size=20)), 
+                     legend_opts=opts.LegendOpts(legend_icon='circle', orient='vertical', align='left', item_width=15, item_height=8, item_gap=7, pos_top = "55", pos_left = "110", 
+                                                 textstyle_opts=opts.TextStyleOpts(font_size=10)), 
+                     xaxis_opts=opts.AxisOpts(name_textstyle_opts=opts.TextStyleOpts(font_size=9,color='#525252'),
+                                              axisline_opts=opts.AxisLineOpts(linestyle_opts=opts.LineStyleOpts(color='#525252')),
+                                              axistick_opts=opts.AxisTickOpts(linestyle_opts=opts.LineStyleOpts(color='#525252')),
+                                              axislabel_opts=opts.LabelOpts(font_size=8, color='#525252')),
+                     yaxis_opts=opts.AxisOpts(name_textstyle_opts=opts.TextStyleOpts(font_size=9,color='#525252'),
+                                              axisline_opts=opts.AxisLineOpts(linestyle_opts=opts.LineStyleOpts(color='#525252')),
+                                              axistick_opts=opts.AxisTickOpts(linestyle_opts=opts.LineStyleOpts(color='#525252')),
+                                              axislabel_opts=opts.LabelOpts(font_size=8, color='#525252')),
+                     tooltip_opts=opts.TooltipOpts(trigger='axis', textstyle_opts=opts.TextStyleOpts(font_size=9.5)),
+                     toolbox_opts=opts.ToolboxOpts(feature=opts.ToolBoxFeatureOpts(save_as_image=opts.ToolBoxFeatureSaveAsImageOpts(type_='jpeg', pixel_ratio=2.5)))
+                    )
+
+line.render("line_smooth.html")
+line.render_notebook()
+
+
 # 曲風河流圖
 data_river = []
 
